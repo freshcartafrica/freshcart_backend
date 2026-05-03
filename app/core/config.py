@@ -1,10 +1,9 @@
 from __future__ import annotations
 
 from functools import lru_cache
-from typing import Annotated, List
+from typing import List
 
-from pydantic import field_validator
-from pydantic_settings import BaseSettings, NoDecode, SettingsConfigDict
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
@@ -16,14 +15,11 @@ class Settings(BaseSettings):
     access_token_expire_minutes: int = 60 * 24
     database_url: str = "sqlite:///./freshcart_africa.db"
     redis_url: str = "redis://localhost:6379/0"
-    cors_origins: Annotated[List[str], NoDecode] = ["http://localhost:5173", "http://127.0.0.1:5173"]
+    cors_origins: str = "http://localhost:5173,http://127.0.0.1:5173"
 
-    @field_validator("cors_origins", mode="before")
-    @classmethod
-    def split_origins(cls, value):
-        if isinstance(value, str):
-            return [item.strip() for item in value.split(",") if item.strip()]
-        return value
+    @property
+    def cors_origins_list(self) -> List[str]:
+        return [item.strip() for item in self.cors_origins.split(",") if item.strip()]
 
 
 @lru_cache
