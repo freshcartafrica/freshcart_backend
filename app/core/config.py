@@ -18,7 +18,7 @@ class Settings(BaseSettings):
     access_token_expire_minutes: int = 60 * 24
     database_url: str = Field(
         default="sqlite:///./freshcart_africa.db",
-        validation_alias=AliasChoices("DATABASE_URL", "POSTGRES_INTERNAL_URL", "POSTGRES_URL"),
+        validation_alias=AliasChoices("POSTGRES_INTERNAL_URL", "DATABASE_URL", "POSTGRES_URL"),
     )
     redis_url: str = "redis://localhost:6379/0"
     cors_origins: str = (
