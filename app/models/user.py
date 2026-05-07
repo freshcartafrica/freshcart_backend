@@ -31,6 +31,7 @@ class User(Base):
     vendor_profile = relationship("Vendor", back_populates="user", uselist=False)
     cart = relationship("Cart", back_populates="user", uselist=False)
     orders = relationship("Order", back_populates="user")
+    notifications = relationship("Notification", back_populates="user", cascade="all, delete-orphan")
 
 
 class Vendor(Base):

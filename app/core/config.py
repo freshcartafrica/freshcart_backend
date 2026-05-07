@@ -15,7 +15,11 @@ class Settings(BaseSettings):
     access_token_expire_minutes: int = 60 * 24
     database_url: str = "sqlite:///./freshcart_africa.db"
     redis_url: str = "redis://localhost:6379/0"
-    cors_origins: str = "http://localhost:5173,http://127.0.0.1:5173"
+    cors_origins: str = (
+        "http://localhost:5173,"
+        "http://127.0.0.1:5173,"
+        "https://freshcart-frontend-7ut9.onrender.com"
+    )
 
     @property
     def cors_origins_list(self) -> List[str]:

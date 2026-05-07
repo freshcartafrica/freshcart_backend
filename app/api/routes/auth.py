@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 
 from app.core.database import get_db
 from app.core.security import create_access_token, get_password_hash, verify_password
-from app.models import User, UserRole, Vendor
+from app.models import Admin, User, UserRole, Vendor
 from app.schemas.auth import ForgotPasswordRequest, LoginRequest, MessageResponse, RegisterRequest, TokenResponse
 from app.schemas.user import UserResponse
 
@@ -34,6 +34,8 @@ def register(payload: RegisterRequest, db: Session = Depends(get_db)):
                 is_verified=False,
             )
         )
+    elif payload.role == UserRole.admin:
+        db.add(Admin(user_id=user.id))
 
     db.commit()
     db.refresh(user)

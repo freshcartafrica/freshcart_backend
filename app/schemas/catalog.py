@@ -16,6 +16,7 @@ class CategoryResponse(BaseModel):
 
 class ProductResponse(BaseModel):
     id: int
+    vendor_id: int
     name: str
     slug: str
     description: str
@@ -23,10 +24,16 @@ class ProductResponse(BaseModel):
     unit: str
     stock_quantity: int
     image_url: Optional[str] = None
+    is_active: bool
     featured: bool
     category: CategoryResponse
 
     model_config = {"from_attributes": True}
+
+
+class CategoryUpsert(BaseModel):
+    name: str = Field(min_length=2, max_length=80)
+    image_url: Optional[str] = None
 
 
 class ProductUpsert(BaseModel):
